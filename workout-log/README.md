@@ -1,22 +1,25 @@
 # workout-log
 
-OpenClaw skill to log workout sessions from natural language into a PostgreSQL database.
+OpenClaw skill to log strength training sessions from natural language into a PostgreSQL database.
 
 ## What it does
 
-Tell your agent about your training session — exercises, sets, reps, weights, duration, how you felt — and it parses, confirms, and stores everything in a structured `sport` schema.
-
-Supports: **strength**, **cardio**, **mobility**, **football**.
+Tell your agent about your gym session — exercises, sets, reps, weights, RPE, rest times, duration, how you felt — and it parses, confirms, and stores everything in a structured `sport` schema.
 
 ## Requirements
 
-- PostgreSQL database with the `sport` schema (see `references/` if added)
+- PostgreSQL database
 - `uv` for running the insert script (`uv run --project ~/.openclaw`)
 - Credentials in `~/.openclaw/services/life-db/.env`
 
 ## Setup
 
-1. Create your `~/.openclaw/services/life-db/.env`:
+1. Create the database schema:
+   ```bash
+   psql -f skills/workout-log/schema.sql
+   ```
+
+2. Create your `~/.openclaw/services/life-db/.env`:
    ```env
    PGHOST=localhost
    PGPORT=5432
@@ -24,8 +27,6 @@ Supports: **strength**, **cardio**, **mobility**, **football**.
    PGUSER=...
    PGPASSWORD=...
    ```
-
-2. Run your DB migrations to create the `sport` schema.
 
 3. Install the skill via clawhub:
    ```bash

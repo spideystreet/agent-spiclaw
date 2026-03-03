@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Insert a workout session into sport schema.
+"""Insert a strength training session into sport schema.
 
 Usage:
     python insert_workout.py '<json>'
@@ -7,9 +7,8 @@ Usage:
 JSON format:
 {
   "session_date": "2026-03-02",
-  "session_type": "strength",       # strength | cardio | mobility | football
-  "duration_min": 75,               # total session duration
-  "feeling": 8,                     # 1-10
+  "duration_min": 75,
+  "feeling": 8,
   "notes": "...",
   "exercises": [
     {
@@ -17,8 +16,8 @@ JSON format:
       "sets": 4,
       "reps": 8,
       "weight_kg": 100.0,
-      "duration_min": null,
-      "distance_km": null,
+      "rpe": 8.5,
+      "rest_sec": 120,
       "order_in_session": 1,
       "notes": null
     }
@@ -55,12 +54,11 @@ def insert(data: dict):
                 """
                 INSERT INTO sport.sessions
                     (session_date, session_type, duration_min, feeling, notes)
-                VALUES (%s, %s, %s, %s, %s)
+                VALUES (%s, 'strength', %s, %s, %s)
                 RETURNING id
                 """,
                 (
                     data.get("session_date", date.today().isoformat()),
-                    data.get("session_type", "strength"),
                     data.get("duration_min"),
                     data.get("feeling"),
                     data.get("notes"),
@@ -73,7 +71,7 @@ def insert(data: dict):
                     """
                     INSERT INTO sport.exercises
                         (session_id, exercise_name, sets, reps, weight_kg,
-                         duration_min, distance_km, order_in_session, notes)
+                         rpe, rest_sec, order_in_session, notes)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """,
                     (
@@ -82,8 +80,8 @@ def insert(data: dict):
                         ex.get("sets"),
                         ex.get("reps"),
                         ex.get("weight_kg"),
-                        ex.get("duration_min"),
-                        ex.get("distance_km"),
+                        ex.get("rpe"),
+                        ex.get("rest_sec"),
                         ex.get("order_in_session", i),
                         ex.get("notes"),
                     ),
