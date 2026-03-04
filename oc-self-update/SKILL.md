@@ -41,8 +41,8 @@ Only run after user confirms. Use the channel the user configured (default: `lat
 After a successful install, inform the user that a **gateway restart is required** for changes to take effect. Do not restart automatically — tell the user to run `openclaw restart` or stop/start the daemon.
 
 ```
-✅ OpenClaw mis à jour : {old_version} → {new_version}
-⚠️ Redémarre le gateway : openclaw restart
+✅ OpenClaw updated: {old_version} → {new_version}
+⚠️ Restart the gateway: openclaw restart
 ```
 
 ### 4. Error handling
@@ -58,4 +58,4 @@ After a successful install, inform the user that a **gateway restart is required
 | "Check for updates" | Run check script, report current vs latest |
 | "Update openclaw" | Run check script, if update available ask confirmation, then install |
 | "Switch to beta channel" | Install `openclaw@beta`, remind to restart |
-| "Quelle version j'ai ?" | Run check script, report current version |
+| "What version am I on?" | Run check script, report current version |
