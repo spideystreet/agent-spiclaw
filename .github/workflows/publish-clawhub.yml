@@ -39,18 +39,21 @@ jobs:
               continue
             fi
 
-            # Read latest changelog entry (first non-empty line after first ## heading)
+            # Read latest version and changelog entry from CHANGELOG.md
+            version=""
             changelog=""
             if [ -f "$skill/CHANGELOG.md" ]; then
+              version=$(awk '/^## /{gsub(/^## /,""); print; exit}' "$skill/CHANGELOG.md")
               changelog=$(awk '/^## /{found=1; next} found && NF{print; exit}' "$skill/CHANGELOG.md")
             fi
+            version=${version:-"1.0.0"}
             changelog=${changelog:-"Update"}
 
-            echo "Publishing $skill — $changelog"
+            echo "Publishing $skill@$version — $changelog"
             clawhub publish "$skill" \
               --slug "$skill" \
-              --changelog "$changelog" \
-              --all
+              --version "$version" \
+              --changelog "$changelog"
 
             published="$published $skill"
           done
