@@ -1,0 +1,47 @@
+name: validate-skills
+
+on:
+  pull_request:
+    paths:
+      - '*/SKILL.md'
+      - '*/README.md'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check skill structure
+        run: |
+          failed=0
+          for skill_dir in */; do
+            # Skip non-skill directories
+            [ -f "$skill_dir/SKILL.md" ] || continue
+            skill=$(basename "$skill_dir")
+
+            if [ ! -f "$skill_dir/README.md" ]; then
+              echo "❌ $skill: missing README.md"
+              failed=1
+            fi
+
+            if [ ! -f "$skill_dir/CHANGELOG.md" ]; then
+              echo "❌ $skill: missing CHANGELOG.md"
+              failed=1
+            fi
+
+            if ! grep -q "^name:" "$skill_dir/SKILL.md"; then
+              echo "❌ $skill: SKILL.md missing 'name' in frontmatter"
+              failed=1
+            fi
+            if ! grep -q "^description:" "$skill_dir/SKILL.md"; then
+              echo "❌ $skill: SKILL.md missing 'description' in frontmatter"
+              failed=1
+            fi
+
+            if [ $failed -eq 0 ]; then
+              echo "✅ $skill: OK"
+            fi
+          done
+
+          exit $failed
