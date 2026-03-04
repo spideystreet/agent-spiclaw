@@ -2,7 +2,7 @@
   <img
     width="30%"
     alt="gojo-mishi"
-    src="https://github.com/user-attachments/assets/465835c4-4557-4392-aaa7-b50a63b60819"
+   src="https://github.com/user-attachments/assets/a3d09c75-3a2d-4be5-88ac-eb01aac6c635"
 />
 
 </p>
