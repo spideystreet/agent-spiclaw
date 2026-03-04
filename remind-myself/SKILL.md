@@ -1,12 +1,12 @@
 ---
 name: remind-myself
-description: Set a one-shot reminder. Use when the user asks to be reminded of something at a specific time or after a duration (e.g., "remind me to call the dentist at 3pm", "remind me in 20 minutes to take out the laundry", "remind me tomorrow at 9am").
-metadata: {"openclaw":{"requires":{"bins":["jq"]}}}
+description: "MANDATORY for all reminders. Do NOT use the cron tool directly — it will not deliver to Telegram. You MUST read this skill file FIRST and use the exec tool to run the remind.sh script it provides. Any reminder created without reading this file will silently fail to reach the user."
+metadata: {}
 ---
 
 # Reminder
 
-Creates a one-shot cron job that delivers a reminder back to the user's current channel at the specified time.
+Creates a one-shot cron job that delivers a reminder to Telegram at the specified time.
 
 ## Workflow
 
@@ -17,17 +17,16 @@ Extract:
 | Field | Notes |
 |-------|-------|
 | `text` | What to remember (verbatim or paraphrased, concise) |
-| `when` | When to deliver — relative ("in 20 minutes", "in 2h") or absolute ("tomorrow at 9am", "Friday at 14:00") |
+| `when` | When to deliver — relative or absolute |
 
 If `when` is ambiguous, ask for clarification before proceeding.
 
-### 2. Compute the `--at` value
+### 2. Compute the `when` value
 
 **Relative durations** → pass directly as `<n><unit>`:
 - "in 20 minutes" → `20m`
 - "in 2 hours" → `2h`
 - "in 1 day" → `1d`
-- "in 30 seconds" → `30s`
 
 **Absolute times** → convert to ISO 8601 in **Europe/Paris** timezone:
 ```bash
@@ -35,28 +34,30 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 # → 2026-03-03T09:00:00+01:00
 ```
 
-### 3. Create the cron job
+### 3. Run the reminder script
+
+**This is the only way to create a reminder. Do not use any other method.**
 
 ```json
 {
   "tool": "exec",
-  "command": "openclaw cron add --token \"$(jq -r '.gateway.auth.token' ~/.openclaw/openclaw.json)\" --at <when> --system-event \"⏰ Reminder: <text>\" --announce --channel telegram --to <TELEGRAM_CHAT_ID> --delete-after-run --name \"reminder-<slug>\""
+  "command": "bash {baseDir}/scripts/remind.sh \"<when>\" \"<text>\""
 }
 ```
 
-| Flag | Notes |
-|------|-------|
-| `--token` | Gateway auth token, extracted from `openclaw.json` via `jq` |
-| `--at` | ISO timestamp or relative duration (`20m`, `2h`, `1d`) |
-| `--system-event` | Message content of the reminder |
-| `--announce` | Posts the result back to the user's chat |
-| `--channel telegram --to <ID>` | Telegram chat ID, defined in `TOOLS.md` |
-| `--delete-after-run` | Auto-cleans the one-shot job after firing |
-| `--name reminder-<slug>` | Short kebab-case name based on the topic (max 20 chars) |
+The script handles everything: chat ID resolution, cron job creation, and verification.
 
-### 4. Confirm to the user
+### 4. Check the script output
 
-After the job is created successfully, confirm with:
+The script prints the result. Look for:
+- `OK: reminder-xxx is scheduled` → success
+- `ERROR: ...` → report the exact error to the user
+
+**Do not confirm success unless the script output says "OK".**
+
+### 5. Confirm to the user
+
+Only after seeing "OK" in the script output:
 
 ```
 ⏰ Reminder set!
@@ -64,17 +65,19 @@ After the job is created successfully, confirm with:
 🕐 <human-readable time> (Europe/Paris)
 ```
 
-### 5. Error handling
+### 6. Error handling
 
-- If `openclaw cron add` fails → report the error and do not retry silently
+- **Never assume failure without running the script.** Always execute it and report the actual output.
+- **Never invent a diagnosis.** If something fails, show the raw error.
+- **Never use sessions_spawn, sleep, or any other method.** Only use the script above.
 - If the time is in the past → warn the user and ask for a new time
 - If the reminder text is empty → ask what to remind them of
 
 ## Examples
 
-| User says | `--at` | `--name` |
-|-----------|--------|---------|
-| "in 20 minutes, remind me to take out the laundry" | `20m` | `reminder-laundry` |
-| "remind me to call Alice tomorrow at 14h" | `2026-03-03T14:00:00+01:00` | `reminder-call-alice` |
-| "in 2 hours: check the oven" | `2h` | `reminder-oven` |
-| "friday at 9am: team standup" | `2026-03-06T09:00:00+01:00` | `reminder-standup` |
+| User says | `when` | `text` |
+|-----------|--------|--------|
+| "in 20 minutes, remind me to take out the laundry" | `20m` | `Take out the laundry` |
+| "remind me to call Alice tomorrow at 14h" | `2026-03-03T14:00:00+01:00` | `Call Alice` |
+| "in 2 hours: check the oven" | `2h` | `Check the oven` |
+| "friday at 9am: team standup" | `2026-03-06T09:00:00+01:00` | `Team standup` |
