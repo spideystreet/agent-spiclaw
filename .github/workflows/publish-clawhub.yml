@@ -81,10 +81,10 @@ jobs:
                 if [ -n "$GEMINI_API_KEY" ]; then
                   prompt="A ClawHub skill named \"$skill\" with description \"$skill_desc\" needs a new unique slug because \"$skill\" is already taken. Suggest exactly 3 alternative slugs. Rules: lowercase, hyphens only, concise, descriptive. Reply with ONLY 3 slugs, one per line, no numbering or extra text."
 
-                  gemini_response=$(curl -sf \
+                  gemini_response=$(curl -s \
                     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
                     -H "Content-Type: application/json" \
-                    -d "{\"contents\":[{\"parts\":[{\"text\":$(echo "$prompt" | jq -Rs .)}]}]}" 2>/dev/null)
+                    -d "{\"contents\":[{\"parts\":[{\"text\":$(echo "$prompt" | jq -Rs .)}]}]}" 2>/dev/null) || true
 
                   suggestions=$(echo "$gemini_response" | jq -r '.candidates[0].content.parts[0].text // empty' 2>/dev/null)
 
