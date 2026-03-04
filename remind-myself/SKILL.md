@@ -54,9 +54,22 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 | `--delete-after-run` | Auto-cleans the one-shot job after firing |
 | `--name reminder-<slug>` | Short kebab-case name based on the topic (max 20 chars) |
 
-### 4. Confirm to the user
+### 4. Verify the cron job was created
 
-After the job is created successfully, confirm with:
+After `cron add`, list active cron jobs to confirm the reminder exists:
+
+```json
+{
+  "tool": "exec",
+  "command": "openclaw cron list --token \"$(jq -r '.gateway.auth.token' ~/.openclaw/openclaw.json)\""
+}
+```
+
+Check that the output contains the `reminder-<slug>` job. If it does not appear, report the failure to the user — do not assume success.
+
+### 5. Confirm to the user
+
+Only after verification (step 4), confirm with:
 
 ```
 ⏰ Reminder set!
@@ -64,9 +77,11 @@ After the job is created successfully, confirm with:
 🕐 <human-readable time> (Europe/Paris)
 ```
 
-### 5. Error handling
+### 6. Error handling
 
-- If `openclaw cron add` fails → report the error and do not retry silently
+- **Never assume failure without running the command.** Always execute `cron add` and report the actual output.
+- **Never invent a diagnosis.** If something fails, show the raw error — do not guess the cause.
+- If `openclaw cron add` fails → report the exact error output and do not retry silently
 - If the time is in the past → warn the user and ask for a new time
 - If the reminder text is empty → ask what to remind them of
 
