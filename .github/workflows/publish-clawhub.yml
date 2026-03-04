@@ -81,12 +81,24 @@ jobs:
                 if [ -n "$GEMINI_API_KEY" ]; then
                   prompt="A ClawHub skill named \"$skill\" with description \"$skill_desc\" needs a new unique slug because \"$skill\" is already taken. Suggest exactly 3 alternative slugs. Rules: lowercase, hyphens only, concise, descriptive. Reply with ONLY 3 slugs, one per line, no numbering or extra text."
 
-                  gemini_response=$(curl -s \
+                  request_body=$(jq -n --arg p "$prompt" '{"contents":[{"parts":[{"text":$p}]}]}')
+
+                  gemini_response=$(curl -s -w "\n%{http_code}" \
                     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
                     -H "Content-Type: application/json" \
-                    -d "{\"contents\":[{\"parts\":[{\"text\":$(echo "$prompt" | jq -Rs .)}]}]}" 2>/dev/null) || true
+                    -d "$request_body") || true
 
-                  suggestions=$(echo "$gemini_response" | jq -r '.candidates[0].content.parts[0].text // empty' 2>/dev/null)
+                  http_code=$(echo "$gemini_response" | tail -1)
+                  response_body=$(echo "$gemini_response" | sed '$d')
+
+                  if [ "$http_code" = "200" ]; then
+                    suggestions=$(echo "$response_body" | jq -r '.candidates[0].content.parts[0].text // empty' 2>/dev/null)
+                  else
+                    echo "::warning::Gemini API returned HTTP $http_code"
+                    error_msg=$(echo "$response_body" | jq -r '.error.message // empty' 2>/dev/null)
+                    [ -n "$error_msg" ] && echo "::warning::Gemini error: $error_msg"
+                    suggestions=""
+                  fi
 
                   if [ -n "$suggestions" ]; then
                     echo ""
