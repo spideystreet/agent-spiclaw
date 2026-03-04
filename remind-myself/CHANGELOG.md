@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+Add mandatory step to resolve Telegram chat ID from TOOLS.md before creating cron job. Mark --to flag as critical.
+
 ## 1.0.3
 
 Fix cron command: use --session isolated + --message instead of --token + --system-event.

@@ -35,14 +35,20 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 # → 2026-03-03T09:00:00+01:00
 ```
 
-### 3. Create the cron job
+### 3. Resolve the Telegram chat ID
+
+Read `~/workspace/TOOLS.md` and extract the Telegram chat ID from the Channels section. This is **mandatory** — never use `--channel last` or omit `--to`.
+
+### 4. Create the cron job
 
 ```json
 {
   "tool": "exec",
-  "command": "openclaw cron add --name \"reminder-<slug>\" --at <when> --session isolated --message \"⏰ Reminder: <text>\" --announce --channel telegram --to <TELEGRAM_CHAT_ID> --delete-after-run"
+  "command": "openclaw cron add --name \"reminder-<slug>\" --at <when> --session isolated --message \"⏰ Reminder: <text>\" --announce --channel telegram --to <CHAT_ID> --delete-after-run"
 }
 ```
+
+Replace `<CHAT_ID>` with the exact value from `TOOLS.md`.
 
 | Flag | Notes |
 |------|-------|
@@ -51,10 +57,13 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 | `--session isolated` | Runs as a dedicated background agent turn |
 | `--message` | Prompt for the isolated agent turn |
 | `--announce` | Delivers the output to the specified channel |
-| `--channel telegram --to <ID>` | Telegram chat ID, defined in `TOOLS.md` |
+| `--channel telegram` | Delivery channel type |
+| `--to <CHAT_ID>` | **Required.** Telegram chat ID from `~/workspace/TOOLS.md` |
 | `--delete-after-run` | Auto-cleans the one-shot job after firing |
 
-### 4. Verify the cron job was created
+**Critical**: `--channel telegram --to <CHAT_ID>` must ALWAYS be present. Without `--to`, the delivery silently fails.
+
+### 5. Verify the cron job was created
 
 After `cron add`, list active cron jobs to confirm the reminder exists:
 
@@ -67,7 +76,7 @@ After `cron add`, list active cron jobs to confirm the reminder exists:
 
 Check that the output contains the `reminder-<slug>` job. If it does not appear, report the failure to the user — do not assume success.
 
-### 5. Confirm to the user
+### 6. Confirm to the user
 
 Only after verification (step 4), confirm with:
 
@@ -77,7 +86,7 @@ Only after verification (step 4), confirm with:
 🕐 <human-readable time> (Europe/Paris)
 ```
 
-### 6. Error handling
+### 7. Error handling
 
 - **Never assume failure without running the command.** Always execute `cron add` and report the actual output.
 - **Never invent a diagnosis.** If something fails, show the raw error — do not guess the cause.
