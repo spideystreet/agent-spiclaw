@@ -1,17 +1,3 @@
-# OpenClaw internal state
-.openclaw/
-
-# Personal files — fill these in locally, never commit
-AGENTS.md
-HEARTBEAT.md
-IDENTITY.md
-MEMORY.md
-SOUL.md
-TOOLS.md
-USER.md
-memory/
-.secrets
-
 # Python
 __pycache__/
 *.pyc
