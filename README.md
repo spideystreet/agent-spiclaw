@@ -12,9 +12,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/agent-spiclaw-blueviolet?style=for-the-badge" alt="Spiclaw">
-  <img src="https://img.shields.io/badge/powered%20by-OpenClaw-black?style=for-the-badge" alt="OpenClaw">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="MIT">
+  <img src="https://img.shields.io/badge/agent-spiclaw-blueviolet?logo=dependabot&logoColor=white" alt="Spiclaw">
+  <img src="https://img.shields.io/badge/powered%20by-OpenClaw-black?logo=github&logoColor=white" alt="OpenClaw">
+  <img src="https://img.shields.io/badge/license-MIT-green?logo=opensourceinitiative&logoColor=white" alt="MIT">
 </p>
 
 ---
