@@ -62,7 +62,7 @@ Only after seeing "OK" in the script output:
 ```
 ⏰ Reminder set!
 📝 <text>
-🕐 <human-readable time> (Europe/Paris)
+🕐 <human-readable time>
 ```
 
 ### 6. Error handling
