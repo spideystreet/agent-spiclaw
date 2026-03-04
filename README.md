@@ -34,9 +34,9 @@ Useful skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent fra
 | Skill | Description | Status | Added |
 |-------|-------------|--------|-------|
 | [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
-| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
-| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
-| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@oc-self-update`](./oc-self-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@remind-myself`](./remind-myself/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@skill-build-helper`](./skill-build-helper/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 | [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 
 ## Install
@@ -63,7 +63,7 @@ clawhub install <skill-slug>
 ## Contributing
 
 Got an idea for a skill ? Open an issue or submit a PR.
-Use [`@skill-builder`](./skill-builder/) to scaffold and optimize your skills following best practices.
+Use [`@skill-build-helper`](./skill-build-helper/) to scaffold and optimize your skills following best practices.
 Keep it simple, keep it useful.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
