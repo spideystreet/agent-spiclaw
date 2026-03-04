@@ -1,15 +1,10 @@
 <p align="center">
   <img
     width="30%"
-    alt="ascii-art-text"
-    src="https://github.com/user-attachments/assets/f1216a3f-70a4-4a62-9005-47cc33c5112e"
+    alt="gojo-mishi"
+    src="https://github.com/user-attachments/assets/465835c4-4557-4392-aaa7-b50a63b60819"
 />
-</p>
-<p align="center">
-  <img 
-    width="30%" 
-    alt="ascii-art-text (5)" 
-    src="https://github.com/user-attachments/assets/1baeb831-0f88-4232-bef7-7831ee68cc2b" />
+
 </p>
 
 <p align="center">
