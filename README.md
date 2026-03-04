@@ -23,7 +23,11 @@
 
 | Skill | Description |
 |-------|-------------|
-| **`workout-track`** | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL |
+| [`ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs |
+| [`openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update |
+| [`reminder`](./reminder/) | Set one-shot reminders via cron and Telegram |
+| [`skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices |
+| [`workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL |
 
 ## Install
 
