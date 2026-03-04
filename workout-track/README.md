@@ -1,4 +1,4 @@
-# workout-log
+# workout-track
 
 OpenClaw skill to log strength training sessions from natural language into a PostgreSQL database.
 
@@ -16,7 +16,7 @@ Tell your agent about your gym session — exercises, sets, reps, weights, RPE, 
 
 1. Create the database schema:
    ```bash
-   psql -f skills/workout-log/schema.sql
+   psql -f skills/workout-track/schema.sql
    ```
 
 2. Create your `~/.openclaw/services/life-db/.env`:
@@ -30,7 +30,7 @@ Tell your agent about your gym session — exercises, sets, reps, weights, RPE, 
 
 3. Install the skill via clawhub:
    ```bash
-   clawhub install workout-log
+   clawhub install workout-track
    ```
 
 ## Usage

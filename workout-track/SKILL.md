@@ -1,5 +1,5 @@
 ---
-name: workout-log
+name: workout-track
 description: Log a strength training (musculation) session and insert it into the life_db database. Use when the user shares their gym session, exercises, sets, reps, weights, RPE, rest times, session duration, feelings, or asks to record a workout.
 ---
 
@@ -58,7 +58,7 @@ Only after confirmation, use the `exec` tool:
 ```json
 {
   "tool": "exec",
-  "command": "bash -c 'set -a; source ~/.openclaw/services/life-db/.env; uv run --project ~/.openclaw ~/.openclaw/workspace/skills/workout-log/scripts/insert_workout.py <json>'"
+  "command": "bash -c 'set -a; source ~/.openclaw/services/life-db/.env; uv run --project ~/.openclaw ~/.openclaw/workspace/skills/workout-track/scripts/insert_workout.py <json>'"
 }
 ```
 

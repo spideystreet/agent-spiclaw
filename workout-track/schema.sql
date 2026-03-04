@@ -1,4 +1,4 @@
--- workout-log schema
+-- workout-track schema
 -- Run this once on your PostgreSQL database to create the required tables.
 
 CREATE SCHEMA IF NOT EXISTS sport;
