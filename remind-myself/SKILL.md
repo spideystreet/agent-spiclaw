@@ -1,5 +1,5 @@
 ---
-name: reminder
+name: remind-myself
 description: Set a one-shot reminder. Use when the user asks to be reminded of something at a specific time or after a duration (e.g., "remind me to call the dentist at 3pm", "rappelle-moi dans 20 minutes de sortir le linge", "remind me tomorrow at 9am").
 metadata: {"openclaw":{"requires":{"bins":["jq"]}}}
 ---
