@@ -25,6 +25,8 @@ jobs:
 
       - name: Detect changed skills and publish
         id: publish
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             # Manual trigger: publish all skills
@@ -40,9 +42,10 @@ jobs:
           fi
 
           published=""
+          skipped=""
           for skill in $changed_skills; do
             if [ ! -d "$skill" ]; then
-              echo "⚠️  $skill: directory not found, skipping"
+              echo "::warning::$skill: directory not found, skipping"
               continue
             fi
 
@@ -57,15 +60,65 @@ jobs:
             changelog=${changelog:-"Update"}
 
             echo "Publishing $skill@$version — $changelog"
-            clawhub publish "$skill" \
+            publish_output=$(clawhub publish "$skill" \
               --slug "$skill" \
               --version "$version" \
-              --changelog "$changelog"
+              --changelog "$changelog" 2>&1) && publish_ok=true || publish_ok=false
 
-            published="$published $skill"
+            if [ "$publish_ok" = "true" ]; then
+              published="$published $skill"
+              echo "$publish_output"
+            else
+              echo "$publish_output"
+              # Check if failure is a slug ownership conflict
+              if echo "$publish_output" | grep -qi "owner"; then
+                echo "::error::$skill: slug '$skill' is owned by another user"
+
+                # Read skill description for Gemini context
+                skill_desc=$(awk '/^description:/{gsub(/^description: */,""); print; exit}' "$skill/SKILL.md" 2>/dev/null || echo "$skill")
+
+                # Ask Gemini Flash for alternative slug suggestions
+                if [ -n "$GEMINI_API_KEY" ]; then
+                  prompt="A ClawHub skill named \"$skill\" with description \"$skill_desc\" needs a new unique slug because \"$skill\" is already taken. Suggest exactly 3 alternative slugs. Rules: lowercase, hyphens only, concise, descriptive. Reply with ONLY 3 slugs, one per line, no numbering or extra text."
+
+                  gemini_response=$(curl -sf \
+                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d "{\"contents\":[{\"parts\":[{\"text\":$(echo "$prompt" | jq -Rs .)}]}]}" 2>/dev/null)
+
+                  suggestions=$(echo "$gemini_response" | jq -r '.candidates[0].content.parts[0].text // empty' 2>/dev/null)
+
+                  if [ -n "$suggestions" ]; then
+                    echo ""
+                    echo "::notice::Gemini suggests these alternative slugs for '$skill':"
+                    echo "$suggestions" | while IFS= read -r line; do
+                      [ -n "$line" ] && echo "::notice::  - $line"
+                    done
+                    echo ""
+                    echo "To fix: rename the skill folder or add a 'slug' override, then re-publish."
+                  else
+                    echo "::warning::Could not get slug suggestions from Gemini"
+                  fi
+                else
+                  echo "::warning::GEMINI_API_KEY not set — skipping slug suggestions"
+                fi
+
+                skipped="$skipped $skill"
+              else
+                echo "::error::$skill: publish failed"
+                skipped="$skipped $skill"
+              fi
+            fi
           done
 
           echo "published=$published" >> $GITHUB_OUTPUT
+          echo "skipped=$skipped" >> $GITHUB_OUTPUT
+
+          # Fail the job if any skills were skipped
+          if [ -n "$skipped" ]; then
+            echo "::error::Some skills failed to publish:$skipped"
+            exit 1
+          fi
 
       - name: Notify Telegram
         if: steps.publish.outputs.published != ''
