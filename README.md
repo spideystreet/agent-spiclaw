@@ -31,13 +31,13 @@ A collection of custom skills for the [OpenClaw](https://github.com/openclaw/ope
 
 ## Skills
 
-| Skill | Description | Status |
-|-------|-------------|--------|
-| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
-| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
-| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
-| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
-| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
+| Skill | Description | Status | Added |
+|-------|-------------|--------|-------|
+| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
+| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
+| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
+| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
+| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
 
 ## Install
 
