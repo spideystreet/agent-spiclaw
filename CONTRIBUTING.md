@@ -1,4 +1,4 @@
-# Contributing
+# CONTRIBUTING
 
 Thanks for your interest in contributing to Spiclaw Skills!
 
@@ -7,7 +7,7 @@ Thanks for your interest in contributing to Spiclaw Skills!
 ### 1. Create the skill folder
 
 ```
-skills/<your-skill-name>/
+<your-skill-name>/
 ├── SKILL.md      # required — metadata + full prompt
 ├── README.md     # optional — human-readable docs
 └── ...           # any additional files your skill needs
