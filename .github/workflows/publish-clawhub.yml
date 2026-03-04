@@ -136,8 +136,8 @@ jobs:
         if: steps.publish.outputs.published != ''
         run: |
           for skill in ${{ steps.publish.outputs.published }}; do
-            changelog=$(awk '/^## /{found=1; next} found && NF{print; exit}' "$skill/CHANGELOG.md" 2>/dev/null || echo "Update")
-            message="🦞 Skill publié : ${skill}%0A${changelog}"
+            version=$(awk '/^## /{gsub(/^## /,""); print; exit}' "$skill/CHANGELOG.md" 2>/dev/null || echo "1.0.0")
+            message="🦞 Skill new version: ${skill}%0AVersion: v${version}"
             curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
               -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
               -d "text=${message}"
