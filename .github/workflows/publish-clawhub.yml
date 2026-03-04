@@ -1,0 +1,69 @@
+name: publish-clawhub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*/SKILL.md'
+      - '*/README.md'
+      - '*/CHANGELOG.md'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install clawhub
+        run: npm install -g clawhub
+
+      - name: Login to ClawHub
+        run: clawhub login --token ${{ secrets.CLAWHUB_TOKEN }} --no-browser
+
+      - name: Detect changed skills and publish
+        id: publish
+        run: |
+          changed_skills=$(git diff --name-only HEAD~1 HEAD | grep '/SKILL.md\|/README.md\|/CHANGELOG.md' | cut -d/ -f1 | sort -u)
+
+          if [ -z "$changed_skills" ]; then
+            echo "No skill changes detected."
+            exit 0
+          fi
+
+          published=""
+          for skill in $changed_skills; do
+            if [ ! -d "$skill" ]; then
+              echo "⚠️  $skill: directory not found, skipping"
+              continue
+            fi
+
+            # Read latest changelog entry (first non-empty line after first ## heading)
+            changelog=""
+            if [ -f "$skill/CHANGELOG.md" ]; then
+              changelog=$(awk '/^## /{found=1; next} found && NF{print; exit}' "$skill/CHANGELOG.md")
+            fi
+            changelog=${changelog:-"Update"}
+
+            echo "Publishing $skill — $changelog"
+            clawhub publish "$skill" \
+              --slug "$skill" \
+              --changelog "$changelog" \
+              --all
+
+            published="$published $skill"
+          done
+
+          echo "published=$published" >> $GITHUB_OUTPUT
+
+      - name: Notify Telegram
+        if: steps.publish.outputs.published != ''
+        run: |
+          for skill in ${{ steps.publish.outputs.published }}; do
+            changelog=$(awk '/^## /{found=1; next} found && NF{print; exit}' "$skill/CHANGELOG.md" 2>/dev/null || echo "Update")
+            message="🦞 Skill publié : ${skill}%0A${changelog}"
+            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+              -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+              -d "text=${message}"
+          done
