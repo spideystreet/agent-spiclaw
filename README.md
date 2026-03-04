@@ -19,15 +19,19 @@
 
 ---
 
+## What is this ?
+
+A collection of custom skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent framework. Each skill is self-contained, open-source, and installable via [ClawHub](https://clawhub.ai/).
+
 ## Skills
 
-| Skill | Description |
-|-------|-------------|
-| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs |
-| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update |
-| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram |
-| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices |
-| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL |
+| Skill | Description | Status |
+|-------|-------------|--------|
+| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
+| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
+| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
+| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
+| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) |
 
 ## Install
 
@@ -51,5 +55,5 @@ MIT — use them, fork them, make them yours.
 ---
 
 <p align="center">
-  <sub>Built by <a href="https://github.com/spideystreet">@spideystreet</a> · powered by <a href="https://github.com/nichochar/openclaw">OpenClaw</a></sub>
+  <sub>Built by <a href="https://github.com/spideystreet">@spideystreet</a> · powered by <a href="https://github.com/openclaw/openclaw">OpenClaw</a></sub>
 </p>
