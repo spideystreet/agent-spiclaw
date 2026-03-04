@@ -5,6 +5,7 @@ on:
     paths:
       - '*/SKILL.md'
       - '*/README.md'
+      - '*/CHANGELOG.md'
 
 jobs:
   validate:
@@ -46,28 +47,46 @@ jobs:
 
           exit $failed
 
+      - name: Install clawhub
+        if: always()
+        run: npm install -g clawhub
+
+      - name: Login to ClawHub
+        if: always()
+        run: clawhub login --token ${{ secrets.CLAWHUB_TOKEN }} --no-browser
+
       - name: Check slug availability
         if: always()
         run: |
-          owner="spideystreet"
-          warnings=0
+          conflicts=0
 
           for skill_dir in */; do
             [ -f "$skill_dir/SKILL.md" ] || continue
             skill=$(basename "$skill_dir")
 
-            # Fetch the ClawHub page for this slug under our owner
-            response=$(curl -sf "https://clawhub.ai/${owner}/${skill}" 2>/dev/null) || continue
+            # Attempt a test publish to check slug ownership
+            output=$(clawhub publish "$skill" \
+              --slug "$skill" \
+              --version "0.0.0-pr-check" \
+              --changelog "Slug availability check" 2>&1) && ok=true || ok=false
 
-            # Check if the page has metadata indicating the skill exists under a different owner
-            page_owner=$(echo "$response" | grep -oP '(?<="owner":")[^"]*' 2>/dev/null || true)
-
-            if [ -n "$page_owner" ] && [ "$page_owner" != "$owner" ] && [ "$page_owner" != "null" ]; then
-              echo "::warning::$skill: slug '$skill' may already be taken by '$page_owner' on ClawHub"
-              warnings=1
+            if [ "$ok" = "false" ]; then
+              if echo "$output" | grep -qi "owner"; then
+                echo "::error::$skill: slug '$skill' is already taken by another user on ClawHub"
+                conflicts=1
+              elif echo "$output" | grep -qi "version already exists"; then
+                # 0.0.0-pr-check already published by a previous run — slug is ours, all good
+                echo "✅ $skill: slug available (owned by us)"
+              else
+                echo "::warning::$skill: could not verify slug — $output"
+              fi
+            else
+              echo "✅ $skill: slug available"
             fi
           done
 
-          if [ "$warnings" -eq 0 ]; then
-            echo "All slugs appear available"
+          if [ "$conflicts" -gt 0 ]; then
+            echo ""
+            echo "::error::Some slugs are taken. Rename the skill folder or choose a different slug before merging."
+            exit 1
           fi
