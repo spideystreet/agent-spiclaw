@@ -30,8 +30,7 @@ fi
 SLUG=$(echo "$TEXT" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g; s/--*/-/g; s/^-//; s/-$//' | cut -c1-12)
 NAME="rem-${SLUG}"
 
-# Create the cron job
-echo "Creating reminder: \"$TEXT\" at $WHEN → Telegram $CHAT_ID"
+# Create the cron job (discard stderr to avoid Doctor warnings noise)
 RESULT=$(openclaw cron add \
   --name "$NAME" \
   --at "$WHEN" \
@@ -40,16 +39,13 @@ RESULT=$(openclaw cron add \
   --announce \
   --channel telegram \
   --to "$CHAT_ID" \
-  --delete-after-run 2>&1)
-
-echo "$RESULT"
+  --delete-after-run 2>/dev/null)
 
 # Verify: check if the JSON response contains an id
 if echo "$RESULT" | grep -q '"id"'; then
-  echo ""
-  echo "OK: $NAME is scheduled"
+  echo "OK: $NAME is scheduled for $WHEN → Telegram $CHAT_ID"
 else
-  echo ""
   echo "ERROR: failed to create reminder"
+  echo "$RESULT"
   exit 1
 fi

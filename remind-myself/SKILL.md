@@ -1,7 +1,7 @@
 ---
 name: remind-myself
-description: Set a one-shot reminder. Use when the user asks to be reminded of something at a specific time or after a duration (e.g., "remind me to call the dentist at 3pm", "remind me in 20 minutes to take out the laundry", "remind me tomorrow at 9am").
-metadata: {"openclaw":{"requires":{"bins":["jq"]}}}
+description: "MANDATORY for all reminders. Do NOT use the cron tool directly — it will not deliver to Telegram. You MUST read this skill file FIRST and use the exec tool to run the remind.sh script it provides. Any reminder created without reading this file will silently fail to reach the user."
+metadata: {}
 ---
 
 # Reminder
