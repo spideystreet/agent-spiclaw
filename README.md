@@ -13,8 +13,8 @@
 </p>
 
 <p align="center">
-  <strong>Custom skills of <a href="https://github.com/spideystreet">@spideystreet</a>'s personal <a href="https://github.com/openclaw/openclaw">OpenClaw</a> agent</strong><br>
-  Open-source , plug-and-play , ready to install via <a href="https://clawhub.ai/">ClawHub</a>
+  <strong>Useful skills for <a href="https://github.com/openclaw/openclaw">OpenClaw agents</a>.</strong><br>
+  Open-source, plug-and-play,</a> and ready to install via <a href="https://clawhub.ai/">ClawHub.</a>
 </p>
 
 <p align="center">
@@ -27,17 +27,17 @@
 
 ## What is this ?
 
-A collection of custom skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent framework. Each skill is self-contained, open-source, and installable via [ClawHub](https://clawhub.ai/).
+Useful skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent framework. Each skill is self-contained, open-source, and installable via [ClawHub](https://clawhub.ai/).
 
 ## Skills
 
 | Skill | Description | Status | Added |
 |-------|-------------|--------|-------|
-| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
-| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
-| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
-| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
-| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green?style=flat-square) | Mar 2026 |
+| [`@ccusage-report`](./ccusage-report/) | Report Claude Code token consumption and costs | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@openclaw-update`](./openclaw-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@reminder`](./reminder/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@skill-builder`](./skill-builder/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 
 ## Install
 
@@ -47,10 +47,24 @@ Install any skill via ClawHub:
 clawhub install <skill-slug>
 ```
 
+<div align="center">
+  <br />
+  <h3>Show your support! 🌟</h3>
+  <p>If these skills make your agent's life easier, please consider giving this repository a star.<br />It helps others discover the project and keeps the motivation high!</p>
+  <a href="https://github.com/spideystreet/skills">
+    <img src="https://img.shields.io/badge/Star%20this%20Repo-Gold?style=for-the-badge&logo=github&logoColor=white" alt="Star this Repo">
+  </a>
+  <br />
+  <br />
+</div>
+
+---
+
 ## Contributing
 
-Got an idea for a skill ? Open an issue or submit a PR.  
-Keep it simple, keep it useful.   
+Got an idea for a skill ? Open an issue or submit a PR.
+Use [`@skill-builder`](./skill-builder/) to scaffold and optimize your skills following best practices.
+Keep it simple, keep it useful.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
