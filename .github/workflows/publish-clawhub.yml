@@ -137,7 +137,7 @@ jobs:
         run: |
           for skill in ${{ steps.publish.outputs.published }}; do
             version=$(awk '/^## /{gsub(/^## /,""); print; exit}' "$skill/CHANGELOG.md" 2>/dev/null || echo "1.0.0")
-            message="🦞 Skill new version: ${skill}%0AVersion: v${version}"
+            message="🦞 Skill new version: ${skill}%0A📦 Version: v${version}"
             curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
               -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
               -d "text=${message}"
