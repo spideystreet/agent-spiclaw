@@ -7,6 +7,7 @@ on:
       - '*/SKILL.md'
       - '*/README.md'
       - '*/CHANGELOG.md'
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -25,7 +26,13 @@ jobs:
       - name: Detect changed skills and publish
         id: publish
         run: |
-          changed_skills=$(git diff --name-only HEAD~1 HEAD | grep '/SKILL.md\|/README.md\|/CHANGELOG.md' | cut -d/ -f1 | sort -u)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger: publish all skills
+            changed_skills=$(ls -d */SKILL.md 2>/dev/null | cut -d/ -f1 | sort -u)
+          else
+            # Push trigger: publish only changed skills
+            changed_skills=$(git diff --name-only HEAD~1 HEAD | grep '/SKILL.md\|/README.md\|/CHANGELOG.md' | cut -d/ -f1 | sort -u)
+          fi
 
           if [ -z "$changed_skills" ]; then
             echo "No skill changes detected."
