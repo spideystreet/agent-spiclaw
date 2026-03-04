@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+Add remind.sh script that handles cron creation, chat ID resolution, and verification. Simplify SKILL.md to just call the script.
+
 ## 1.0.4
 
 Add mandatory step to resolve Telegram chat ID from TOOLS.md before creating cron job. Mark --to flag as critical.
