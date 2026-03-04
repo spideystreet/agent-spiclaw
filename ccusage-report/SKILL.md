@@ -1,6 +1,6 @@
 ---
 name: ccusage-report
-description: Report Claude Code token consumption and costs using ccusage. Use when the user asks about their Claude Code usage, token consumption, API costs, spending, or wants a daily/weekly/monthly usage summary. Triggers on: "show my claude code usage", "how much did I spend", "my token consumption", "ccusage report", "consommation claude code", "combien j'ai dépensé", "rapport d'utilisation".
+description: Report Claude Code token consumption and costs using ccusage. Use when the user asks about their Claude Code usage, token consumption, API costs, spending, or wants a daily/weekly/monthly usage summary. Triggers on: "show my claude code usage", "how much did I spend", "my token consumption", "ccusage report", "usage report", "token consumption", "how much did I spend".
 metadata: {"openclaw":{"requires":{"bins":["bunx"]}}}
 ---
 
@@ -16,9 +16,9 @@ Identify the period from the user's message:
 
 | Keyword | Period | Command suffix |
 |---------|--------|---------------|
-| "today", "aujourd'hui", default | daily | `daily` |
-| "this week", "cette semaine" | weekly | `weekly` |
-| "this month", "ce mois" | monthly | `monthly` |
+| "today", default | daily | `daily` |
+| "this week" | weekly | `weekly` |
+| "this month" | monthly | `monthly` |
 
 ### 2. Run ccusage
 
@@ -65,6 +65,6 @@ For multi-row output (e.g. last 7 days), summarize totals and list each row brie
 | User says | Period | Flags |
 |-----------|--------|-------|
 | "Show my claude code usage" | daily | (none) |
-| "Combien j'ai dépensé cette semaine ?" | weekly | (none) |
+| "How much did I spend this week?" | weekly | (none) |
 | "Monthly report with model breakdown" | monthly | `--breakdown` |
 | "Usage for the last 7 days" | daily | `--since $(date -d '7 days ago' +%Y%m%d)` |

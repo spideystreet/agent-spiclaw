@@ -1,6 +1,6 @@
 ---
 name: workout-track
-description: Log a strength training (musculation) session and insert it into the life_db database. Use when the user shares their gym session, exercises, sets, reps, weights, RPE, rest times, session duration, feelings, or asks to record a workout.
+description: Log a strength training session and insert it into the life_db database. Use when the user shares their gym session, exercises, sets, reps, weights, RPE, rest times, session duration, feelings, or asks to record a workout.
 metadata: {"openclaw":{"requires":{"bins":["uv"]}}}
 ---
 
@@ -49,7 +49,7 @@ Show a summary before inserting:
 • {Exercise 2} — {sets}×{reps} bodyweight
 • …
 
-On save ? (oui / non)
+Save? (yes / no)
 ```
 
 ### 3. Insert
@@ -85,6 +85,6 @@ Replace `<json>` with the minified JSON payload (no newlines, properly shell-esc
 
 | User says | Parsed session |
 |-----------|---------------|
-| "Muscu 1h feeling 8. Bench 4x10 80kg, Squat 4x8 100kg, Curl 3x12 15kg" | 3 exercises, 60 min, feeling 8/10 |
-| "45 min pecs/épaules. Dev couché 5x5 90kg RPE 9, dev militaire 4x8 40kg, élévations latérales 3x15 10kg" | 3 exercises, 45 min, feeling asked |
+| "Gym 1h feeling 8. Bench 4x10 80kg, Squat 4x8 100kg, Curl 3x12 15kg" | 3 exercises, 60 min, feeling 8/10 |
+| "45 min chest/shoulders. Bench press 5x5 90kg RPE 9, overhead press 4x8 40kg, lateral raises 3x15 10kg" | 3 exercises, 45 min, feeling asked |
 | "Quick session 30min: pull-ups 4x8 bodyweight, rows 4x10 60kg" | 2 exercises, 30 min, feeling asked |
