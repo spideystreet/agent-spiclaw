@@ -1,5 +1,5 @@
 ---
-name: openclaw-update
+name: oc-self-update
 description: Check for OpenClaw updates and self-update the installation. Use when the user asks to update OpenClaw, check for updates, upgrade the bot, install a new version, or says a new release is available.
 metadata: {"openclaw":{"requires":{"bins":["npm"]}}}
 ---
