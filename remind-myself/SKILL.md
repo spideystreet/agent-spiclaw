@@ -40,19 +40,19 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 ```json
 {
   "tool": "exec",
-  "command": "openclaw cron add --token \"$(jq -r '.gateway.auth.token' ~/.openclaw/openclaw.json)\" --at <when> --system-event \"⏰ Reminder: <text>\" --announce --channel telegram --to <TELEGRAM_CHAT_ID> --delete-after-run --name \"reminder-<slug>\""
+  "command": "openclaw cron add --name \"reminder-<slug>\" --at <when> --session isolated --message \"⏰ Reminder: <text>\" --announce --channel telegram --to <TELEGRAM_CHAT_ID> --delete-after-run"
 }
 ```
 
 | Flag | Notes |
 |------|-------|
-| `--token` | Gateway auth token, extracted from `openclaw.json` via `jq` |
+| `--name reminder-<slug>` | Short kebab-case name based on the topic (max 20 chars) |
 | `--at` | ISO timestamp or relative duration (`20m`, `2h`, `1d`) |
-| `--system-event` | Message content of the reminder |
-| `--announce` | Posts the result back to the user's chat |
+| `--session isolated` | Runs as a dedicated background agent turn |
+| `--message` | Prompt for the isolated agent turn |
+| `--announce` | Delivers the output to the specified channel |
 | `--channel telegram --to <ID>` | Telegram chat ID, defined in `TOOLS.md` |
 | `--delete-after-run` | Auto-cleans the one-shot job after firing |
-| `--name reminder-<slug>` | Short kebab-case name based on the topic (max 20 chars) |
 
 ### 4. Verify the cron job was created
 
@@ -61,7 +61,7 @@ After `cron add`, list active cron jobs to confirm the reminder exists:
 ```json
 {
   "tool": "exec",
-  "command": "openclaw cron list --token \"$(jq -r '.gateway.auth.token' ~/.openclaw/openclaw.json)\""
+  "command": "openclaw cron list"
 }
 ```
 
