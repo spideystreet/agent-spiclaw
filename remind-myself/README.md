@@ -22,7 +22,7 @@ Tell your agent to remind you of something — at an absolute time or after a re
 
 2. Install the skill via clawhub:
    ```bash
-   clawhub install reminder
+   clawhub install remind-myself
    ```
 
 ## Usage

@@ -1,7 +1,7 @@
 ---
 name: ccusage-report
 description: "Report Claude Code token consumption and costs using ccusage. Use when the user asks about their Claude Code usage, token consumption, API costs, spending, or wants a daily/weekly/monthly usage summary."
-metadata: {}
+metadata: {"openclaw":{"requires":{"bins":["bunx"]}}}
 ---
 
 # Claude Code Usage Report

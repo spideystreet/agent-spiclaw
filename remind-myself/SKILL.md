@@ -1,7 +1,7 @@
 ---
 name: remind-myself
-description: "MANDATORY for all reminders. Do NOT use the cron tool directly — it will not deliver to Telegram. You MUST read this skill file FIRST and use the exec tool to run the remind.sh script it provides. Any reminder created without reading this file will silently fail to reach the user."
-metadata: {}
+description: "Set a one-shot reminder delivered via Telegram at a specific time or after a duration. Use when the user asks to be reminded of something, set an alarm, or schedule a future notification. Always use this skill instead of the cron tool directly — it handles chat ID resolution and delivery."
+metadata: {"openclaw":{"requires":{"bins":["openclaw"]}}}
 ---
 
 # Reminder
@@ -34,7 +34,19 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 # → 2026-03-03T09:00:00+01:00
 ```
 
-### 3. Run the reminder script
+### 3. Confirm with the user before scheduling
+
+Show a summary and ask for confirmation:
+
+```
+Set this reminder?
+- What: <text>
+- When: <human-readable time>
+```
+
+Only proceed after the user confirms.
+
+### 4. Run the reminder script
 
 **This is the only way to create a reminder. Do not use any other method.**
 
@@ -47,7 +59,7 @@ TZ=Europe/Paris date -d "tomorrow 09:00" --iso-8601=seconds
 
 The script handles everything: chat ID resolution, cron job creation, and verification.
 
-### 4. Check the script output
+### 5. Check the script output
 
 The script prints the result. Look for:
 - `OK: reminder-xxx is scheduled` → success
@@ -55,7 +67,7 @@ The script prints the result. Look for:
 
 **Do not confirm success unless the script output says "OK".**
 
-### 5. Confirm to the user
+### 6. Confirm to the user
 
 Only after seeing "OK" in the script output:
 
@@ -65,7 +77,7 @@ Only after seeing "OK" in the script output:
 🕐 <human-readable time>
 ```
 
-### 6. Error handling
+### 7. Error handling
 
 - **Never assume failure without running the script.** Always execute it and report the actual output.
 - **Never invent a diagnosis.** If something fails, show the raw error.
