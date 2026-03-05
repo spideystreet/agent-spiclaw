@@ -33,6 +33,7 @@ Useful skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent fra
 | [`@remind-myself`](./remind-myself/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 | [`@skill-build-helper`](./skill-build-helper/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 | [`@idea-check`](./idea-check/) | Pre-build reality check — scan GitHub, HN, npm, PyPI for existing solutions | ![stable](https://img.shields.io/badge/stable-green) | 03/05/2026 |
+| [`@idea-spark`](./idea-spark/) | Generate project ideas from real pain points, validated with idea-check | ![stable](https://img.shields.io/badge/stable-green) | 03/05/2026 |
 | [`@who-wins`](./who-wins/) | Query the PinchBench AI agent leaderboard (scores, costs, speed) | ![stable](https://img.shields.io/badge/stable-green) | 03/05/2026 |
 | [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![wip](https://img.shields.io/badge/WIP-orange) | 03/04/2026 |
 
