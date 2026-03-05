@@ -32,6 +32,7 @@ Useful skills for the [OpenClaw](https://github.com/openclaw/openclaw) agent fra
 | [`@oc-self-update`](./oc-self-update/) | Check for OpenClaw updates and self-update | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 | [`@remind-myself`](./remind-myself/) | Set one-shot reminders via cron and Telegram | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
 | [`@skill-build-helper`](./skill-build-helper/) | Create or optimize OpenClaw skills following best practices | ![stable](https://img.shields.io/badge/stable-green) | 03/04/2026 |
+| [`@idea-check`](./idea-check/) | Pre-build reality check — scan GitHub, HN, npm, PyPI for existing solutions | ![stable](https://img.shields.io/badge/stable-green) | 03/05/2026 |
 | [`@workout-track`](./workout-track/) | Log strength training sessions (sets, reps, weight, RPE) to PostgreSQL | ![wip](https://img.shields.io/badge/WIP-orange) | 03/04/2026 |
 
 ## Install
