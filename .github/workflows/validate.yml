@@ -40,6 +40,12 @@ jobs:
               failed=1
             fi
 
+            # Check skill is listed in root README.md table
+            if ! grep -q "\`@${skill}\`" README.md; then
+              echo "❌ $skill: not listed in root README.md skills table"
+              failed=1
+            fi
+
             if [ $failed -eq 0 ]; then
               echo "✅ $skill: OK"
             fi
